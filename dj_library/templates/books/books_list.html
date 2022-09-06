@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Каталог книг{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="header">
+            <h1><a href="/books">Каталог</a></h1>
+        </div>
+        <div class="row">
+            {% for book in book_list %}
+                <div class="book col-md-4">
+                    <h1>{{ book.name }}</h1>
+                    <p>Автор: {{ book.author }}</p>
+                    <p><a class="sort-item" href="/books/{{ book.pub_date_str }}">Дата публикации: {{ book.pub_date }}</a></p>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="sort-block">
+        <div class="sort-block">
+            <span class="sort-item">Сортировка каталога по годам:</span>
+            <a class="sort-item" href="?sort=prev">Сначала новые</a>
+            <a class="sort-item" href="?sort=next">Сначала старые</a>
+        </div>
+        </div>
+        <div class="paginator-block">
+            {% if min_date != None or max_date != None %}
+                <span class="sort-item">Другие даты:</span>
+            {% endif %}
+            {% if min_date != None %}
+                <a class="sort-item" href="/books/{{ min_date }}">Назад {{ min_date }}</a>
+            {% endif %}
+            {% if max_date != None %}
+                <a class="sort-item" href="/books/{{ max_date }}">Вперед {{ max_date }}</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
